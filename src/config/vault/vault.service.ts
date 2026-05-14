@@ -52,6 +52,6 @@ export class VaultService {
     if (!this.secrets) {
       throw new Error('VaultService.sync() has not been called yet');
     }
-    return { ...this.secrets };
+    return this.secrets;
   }
 }
