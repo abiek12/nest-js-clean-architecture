@@ -1,0 +1,96 @@
+name: Deploy — Dev
+
+on:
+  push:
+    branches: ['develop']
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  CONTAINER_NAME: nest-boilerplate-dev
+  APP_PORT: 3000
+
+jobs:
+  build-push:
+    name: Build + Push Image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    outputs:
+      image_tag: ${{ steps.meta.outputs.version }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=sha,prefix=dev-   # ← dev-<git-sha> tag
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=gha       # ← GitHub Actions cache
+          cache-to: type=gha,mode=max
+
+  deploy:
+    name: Deploy to Dev
+    needs: build-push
+    runs-on: ubuntu-latest
+    environment: development        # ← GitHub environment (optional protection rules)
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DEV_HOST }}
+          username: ${{ secrets.DEV_SSH_USER }}   # ← never root
+          key: ${{ secrets.DEV_SSH_KEY }}
+          envs: IMAGE_NAME,REGISTRY,CONTAINER_NAME,APP_PORT
+          script: |
+            IMAGE=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:dev-${{ github.sha }}
+
+            echo "Deploying image: $IMAGE"
+
+            docker login ${{ env.REGISTRY }} \
+              --username ${{ github.actor }} \
+              --password ${{ secrets.GITHUB_TOKEN }}
+
+            docker pull $IMAGE
+
+            docker stop ${{ env.CONTAINER_NAME }} || true
+            docker rm ${{ env.CONTAINER_NAME }} || true
+
+            # Prune only dangling images — not all images like before
+            docker image prune -f
+
+            docker run -d \
+              --name ${{ env.CONTAINER_NAME }} \
+              --restart unless-stopped \
+              # --network your-network \
+              -e VAULT_ADDR=${{ secrets.VAULT_ADDR_DEV }} \
+              -e VAULT_TOKEN=${{ secrets.VAULT_TOKEN_DEV }} \
+              -p ${{ env.APP_PORT }}:3000 \
+              $IMAGE

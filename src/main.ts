@@ -13,6 +13,9 @@ async function bootstrap() {
       colors: true,
     }),
   });
+
+  app.enableShutdownHooks();
+
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

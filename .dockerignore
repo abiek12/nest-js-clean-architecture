@@ -2,6 +2,12 @@ node_modules
 dist
 coverage
 .git
-.env
+.github
+.husky
+.vscode
+.idea
 *.log
-.scannerwork
+.env
+Dockerfile
+docker-compose.yml
+README.md
