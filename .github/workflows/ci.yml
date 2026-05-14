@@ -19,13 +19,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '24'
-          cache: 'npm'
+          cache: 'npm'            # ← caches node_modules between runs
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Biome check
-        run: npx biome ci .
+      - name: Biome CI check
+        run: npm run check:ci     # ← fails PR if lint/format issues
 
       - name: Run tests
-        run: npm run test
+        run: npm run test:ci      # ← fails PR if tests fail
