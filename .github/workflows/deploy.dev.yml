@@ -8,18 +8,15 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
   CONTAINER_NAME: nest-boilerplate-dev
-  APP_PORT: 3000
 
 jobs:
   build-push:
     name: Build + Push Image
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
       packages: write
-
-    outputs:
-      image_tag: ${{ steps.meta.outputs.version }}
 
     steps:
       - name: Checkout
@@ -38,43 +35,37 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=sha,prefix=dev-   # ← dev-<git-sha> tag
-
-      - name: Build and push
+      - name: Build and Push Docker Image
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=gha       # ← GitHub Actions cache
+          tags: ghcr.io/${{ github.repository }}:dev-${{ github.sha }}
+          cache-from: type=gha
           cache-to: type=gha,mode=max
-          
+
   deploy:
     name: Deploy to Dev
     needs: build-push
     runs-on: ubuntu-latest
+
     environment: development
 
     steps:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.2.0
+
         with:
           host: ${{ secrets.DEV_HOST }}
           username: ${{ secrets.DEV_SSH_USER }}
           key: ${{ secrets.DEV_SSH_KEY }}
-          envs: IMAGE_NAME,REGISTRY,CONTAINER_NAME,APP_PORT
+
           script: |
-            IMAGE=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:dev-${{ github.sha }}
+            IMAGE=ghcr.io/${{ github.repository }}:dev-${{ github.sha }}
 
             echo "Deploying image: $IMAGE"
 
-            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.REGISTRY }} \
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io \
               -u "${{ github.actor }}" \
               --password-stdin
 
