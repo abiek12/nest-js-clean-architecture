@@ -81,5 +81,5 @@ jobs:
               --restart unless-stopped \
               -e VAULT_ADDR=${{ secrets.VAULT_ADDR_DEV }} \
               -e VAULT_TOKEN=${{ secrets.VAULT_TOKEN_DEV }} \
-              -p 7001:3000 \
+              -p 7010:3000 \
               $IMAGE
