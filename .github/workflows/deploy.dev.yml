@@ -45,7 +45,7 @@ jobs:
           cache-to: type=gha,mode=max
 
   deploy:
-    name: Deploy to Dev
+    name: Deploy
     needs: build-push
     runs-on: ubuntu-latest
 
