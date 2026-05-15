@@ -1,4 +1,4 @@
-name: Deployment for Nest.js Boilerplate (Dev)
+name: Deploy
 
 on:
   push:
