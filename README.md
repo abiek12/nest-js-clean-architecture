@@ -1,98 +1,312 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+````md
+# NestJS Boilerplate
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Enterprise-ready NestJS backend boilerplate with modern engineering standards, CI/CD, code governance, Docker, Vault integration, and scalable architecture practices.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+# Tech Stack
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+| Area | Tool |
+|---|---|
+| Framework | NestJS |
+| Language | TypeScript |
+| Formatter + Linting | Biome |
+| Unit Testing | Jest |
+| Runtime Validation | Zod / class-validator |
+| Static Code Analysis | SonarQube |
+| CI/CD | GitHub Actions |
+| Containerization | Docker |
+| Secrets Management | HashiCorp Vault |
+| Logging | NestJS Logger |
+| API Documentation | Swagger (planned) |
+| Monitoring | Grafana (planned) |
 
-## Project setup
+---
+
+# Features
+
+- NestJS modular architecture
+- Biome formatter + linting
+- Jest testing setup
+- SonarQube CI integration
+- Docker multi-stage build
+- Graceful shutdown support
+- Secure CORS configuration
+- Helmet security headers
+- Compression middleware
+- Global validation pipes
+- API versioning
+- Vault-based environment management
+- GitHub Actions CI/CD pipeline
+- Enterprise-ready folder structure
+
+---
+
+# Folder Structure
+
+```text
+src/
+├── common/
+│   ├── constants/
+│   ├── decorators/
+│   ├── dto/
+│   ├── enums/
+│   ├── exceptions/
+│   ├── filters/
+│   ├── guards/
+│   ├── interceptors/
+│   ├── interfaces/
+│   ├── middlewares/
+│   ├── pipes/
+│   ├── types/
+│   └── utils/
+│
+├── config/vault
+|
+├── lifecycle
+│
+├── modules/
+│   └── example/
+│       ├── dto/
+│       ├── schemas/
+│       ├── example.controller.ts
+│       ├── example.service.ts
+│       └── example.module.ts
+│
+├── app.module.ts
+└── main.ts
+````
+
+---
+
+# Getting Started
+
+## 1. Install Dependencies
 
 ```bash
-$ npm install
+npm install
 ```
 
-## Compile and run the project
+---
+
+# Run Application
+
+## Development
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run start:dev
 ```
 
-## Run tests
+## Production
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run build
+npm run start:prod
 ```
 
-## Deployment
+---
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+# Biome Commands
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## Check
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm run check
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Fix Issues
 
-## Resources
+```bash
+npm run check:fix
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+## Format
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```bash
+npm run format
+```
 
-## Support
+## Lint
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+npm run lint
+```
 
-## Stay in touch
+---
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+# Testing
 
-## License
+## Run Tests
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```bash
+npm run test
+```
+
+## Coverage
+
+```bash
+npm run test:cov
+```
+
+## CI Tests
+
+```bash
+npm run test:ci
+```
+
+---
+
+# Docker
+
+## Build Image
+
+```bash
+docker build -t nestjs-boilerplate .
+```
+
+## Run Container
+
+```bash
+docker run -p 3000:3000 nestjs-boilerplate
+```
+
+---
+
+# Environment Variables
+
+Environment variables are loaded from Vault during bootstrap.
+
+Example Vault secrets:
+
+```env
+PORT=3000
+
+REQUEST_BODY_LIMIT=10mb
+
+CORS_ORIGINS=http://localhost:3000,http://localhost:3001
+
+VAULT_ADDR=http://vault-host:8200
+
+VAULT_TOKEN=your-token
+```
+
+---
+
+# API Standards
+
+## Global Prefix
+
+```text
+/api
+```
+
+## API Versioning
+
+```text
+/api/v1
+```
+
+Example:
+
+```text
+/api/v1/users
+```
+
+---
+
+# Security
+
+The application includes:
+
+* Helmet security headers
+* Request body limits
+* CORS protection
+* Validation pipes
+* Non-root Docker execution
+* Graceful shutdown handling
+
+---
+
+# Graceful Shutdown
+
+The application supports graceful shutdown using:
+
+* SIGTERM
+* SIGINT
+
+This ensures:
+
+* clean resource cleanup
+* safe container shutdown
+* stable deployments
+
+---
+
+# SonarQube
+
+## Run Analysis Through GitHub Actions
+
+The CI pipeline automatically:
+
+* runs tests
+* generates coverage
+* scans code using SonarQube
+
+Required GitHub Secrets:
+
+| Secret         | Description     |
+| -------------- | --------------- |
+| SONAR_HOST_URL | SonarQube URL   |
+| SONAR_TOKEN    | SonarQube token |
+
+---
+
+# CI/CD
+
+GitHub Actions pipeline includes:
+
+* dependency installation
+* Biome validation
+* build validation
+* test execution
+* SonarQube scan
+
+---
+
+# Recommended Branch Strategy
+
+| Branch  | Purpose            |
+| ------- | ------------------ |
+| main    | Production         |
+| staging | UAT / Staging      |
+| develop | Active Development |
+
+---
+
+# Recommended Future Enhancements
+
+* Swagger/OpenAPI
+* Rate limiting
+* RBAC module
+* Structured logging
+* Distributed tracing
+* Grafana dashboards
+* Snyk/Trivy security scans
+
+---
+
+# Engineering Principles
+
+This boilerplate follows:
+
+* clean architecture principles
+* modular design
+* centralized configuration
+* environment isolation
+* CI-first validation
+* infrastructure-as-code mindset
+* production-first engineering practices
+
+```
+```
