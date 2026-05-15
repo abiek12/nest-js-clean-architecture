@@ -3,13 +3,19 @@ name: CI
 on:
   push:
     branches: ['main', 'staging', 'develop']
+
   pull_request:
     branches: ['main', 'staging', 'develop']
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   ci:
-    name: Lint + Test
+    name: Lint + Build + Test + SonarQube
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: Checkout
@@ -17,18 +23,21 @@ jobs:
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
-        with: 
+        with:
           node-version: '24'
-          cache: 'npm'            # ← caches node_modules between runs
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
       - name: Biome CI check
-        run: npm run check:ci     # ← fails PR if lint/format issues
+        run: npm run check:ci
 
-      - name: Run tests
-        run: npm run test:ci      # ← fails PR if tests fail
+      - name: Build validation
+        run: npm run build
+
+      - name: Run tests with coverage
+        run: npm run test:ci
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
