@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ExampleModule } from './modules/example/example.module';
 import { HealthModule } from './modules/health/health.module';
 import { ConfigModule } from '@nestjs/config';
+import { ShutdownService } from './lifecycle/shutdown.service';
 
 @Module({
   imports: [
@@ -14,6 +15,6 @@ import { ConfigModule } from '@nestjs/config';
     ExampleModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ShutdownService],
 })
 export class AppModule {}
