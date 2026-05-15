@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ConsoleLogger, Logger, ValidationPipe, VersioningType } from '@nestjs/common';
+import { ConsoleLogger, Logger, VersioningType } from '@nestjs/common';
 import { bootstrapConfig } from './lifecycle/bootstrap-config';
 import helmet from 'helmet';
 import { json, urlencoded } from 'express';
