@@ -36,17 +36,6 @@ async function bootstrap() {
   app.use(json({ limit: requestBodyLimit }));
   app.use(urlencoded({ extended: true, limit: requestBodyLimit }));
 
-  // Global validation pipe
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      transform: true,
-      transformOptions: { enableImplicitConversion: true },
-      validationError: { target: false },
-    }),
-  );
-
   // CORS configuration
   const options = {
     origin: corsOrigins
