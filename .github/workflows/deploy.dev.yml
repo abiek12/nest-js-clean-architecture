@@ -92,5 +92,5 @@ jobs:
               # --network your-network \
               -e VAULT_ADDR=${{ secrets.VAULT_ADDR_DEV }} \
               -e VAULT_TOKEN=${{ secrets.VAULT_TOKEN_DEV }} \
-              -p ${{ env.APP_PORT }}:3000 \
+              -p ${{ env.APP_PORT }}:7001 \
               $IMAGE
