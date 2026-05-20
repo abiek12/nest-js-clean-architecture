@@ -36,7 +36,7 @@ async function bootstrap() {
   app.use(json({ limit: requestBodyLimit }));
   app.use(urlencoded({ extended: true, limit: requestBodyLimit }));
 
-  // CORS configuration
+  // CORS configuration from environment variable
   const options = {
     origin: corsOrigins
       .split(',')
