@@ -32,10 +32,8 @@ async function bootstrap() {
   // Security middlewares
   app.use(helmet({ crossOriginResourcePolicy: false }));
 
-  console.log('CORS Origins:', corsOrigins);
-  const name =
-    // Body parsing with size limits
-    app.use(json({ limit: requestBodyLimit }));
+  // Body parsing with size limits
+  app.use(json({ limit: requestBodyLimit }));
   app.use(urlencoded({ extended: true, limit: requestBodyLimit }));
 
   // CORS configuration from environment variable
