@@ -50,7 +50,7 @@
       },
 
       "suspicious": {
-        "noConsole": "warn",
+        "noConsole": "error",
         "noDoubleEquals": "error",
         "noExplicitAny": "warn"
       },
