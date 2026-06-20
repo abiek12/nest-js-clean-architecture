@@ -3,7 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { HealthModule } from './modules/health/health.module';
 import { ConfigModule } from '@nestjs/config';
-import { ShutdownService } from './lifecycle/shutdown.service';
+import { UsersModule } from './modules/users/users.module';
+import { ShutdownService } from './config/lifecycle/shutdown.service';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { ShutdownService } from './lifecycle/shutdown.service';
       isGlobal: true,
     }),
     HealthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService, ShutdownService],
