@@ -23,7 +23,8 @@
     "format:fix": "biome format --write ./src",
     "check": "biome check ./src",
     "check:fix": "biome check --write ./src",
-    "check:ci": "biome ci ./src"
+    "check:ci": "biome ci ./src",
+    "prisma:format": "npx prisma format"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

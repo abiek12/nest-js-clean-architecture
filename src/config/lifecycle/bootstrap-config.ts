@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
-import { envSchema } from '../config/env/env.schema';
-import { VaultService } from '../config/vault/vault.service';
+import { VaultService } from '../vault/vault.service';
+import { envSchema } from '../env/env.schema';
 
 const logger = new Logger('Bootstrap');
 
