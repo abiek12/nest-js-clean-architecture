@@ -1,10 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConsoleLogger, Logger, VersioningType } from '@nestjs/common';
-import { bootstrapConfig } from './lifecycle/bootstrap-config';
 import helmet from 'helmet';
 import { json, urlencoded } from 'express';
 import { ConfigService } from '@nestjs/config';
+import { bootstrapConfig } from './config/lifecycle/bootstrap-config';
 
 async function bootstrap() {
   await bootstrapConfig();
