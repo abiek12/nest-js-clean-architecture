@@ -7,7 +7,6 @@ import { GetAllUsersUseCase } from './application/use-cases/get-all-users.use-ca
 import { DeleteUserUseCase } from './application/use-cases/delete-user.use-case';
 import { USER_REPOSITORY } from './domain/repositories/user.repository';
 import { PrismaUserRepository } from './infrastructure/persistence/prisma-user.repository';
-import { HttpController } from './presentation/http/http.controller';
 import { UsersController } from './presentation/http/controllers/users.controller';
 
 @Module({
@@ -23,6 +22,6 @@ import { UsersController } from './presentation/http/controllers/users.controlle
       useClass: PrismaUserRepository,
     },
   ],
-  controllers: [HttpController, UsersController],
+  controllers: [UsersController],
 })
 export class UsersModule {}

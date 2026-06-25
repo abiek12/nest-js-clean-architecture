@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ConsoleLogger, Logger, VersioningType } from '@nestjs/common';
+import { ConsoleLogger, Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import helmet from 'helmet';
 import { json, urlencoded } from 'express';
 import { ConfigService } from '@nestjs/config';
@@ -16,6 +16,15 @@ async function bootstrap() {
       colors: true,
     }),
   });
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
+
   const configService = app.get(ConfigService);
   const requestBodyLimit = configService.get<string>('REQUEST_BODY_LIMIT') || '10mb';
   const corsOrigins = configService.get<string>('CORS_ORIGINS') || '';
