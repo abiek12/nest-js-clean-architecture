@@ -6,6 +6,7 @@ import { GetUserByIdUseCase } from 'src/modules/users/application/use-cases/get-
 import { GetAllUsersUseCase } from 'src/modules/users/application/use-cases/get-all-users.use-case';
 import { UpdateUserRequestDto } from '../dto/requests/update-user.request';
 import { UpdateUserUseCase } from 'src/modules/users/application/use-cases/update-user.use-case';
+import { toResponse, toResponseList } from '../dto/mappers/user-http.mapper';
 
 @Controller('users')
 export class UsersController {
@@ -23,21 +24,21 @@ export class UsersController {
       email: body.email,
     });
 
-    return successResponse('User created successfully!', user);
+    return successResponse('User created successfully!', toResponse(user));
   }
 
   @Get(':id')
   async getUserById(@Param('id') id: string) {
     const user = await this.getUserByIdUseCase.execute(id);
 
-    return successResponse('User fetched successfully', user);
+    return successResponse('User fetched successfully', toResponse(user));
   }
 
   @Get()
   async getAllUsers() {
     const users = await this.getAllUsersUseCase.execute();
 
-    return successResponse('All users fetched successfully!', users);
+    return successResponse('All users fetched successfully!', toResponseList(users));
   }
 
   @Patch(':id')
@@ -48,6 +49,6 @@ export class UsersController {
       email: body.email,
     });
 
-    return successResponse('User updated successfully!', user);
+    return successResponse('User updated successfully!', toResponse(user));
   }
 }

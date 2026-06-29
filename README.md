@@ -1,7 +1,9 @@
-````md
 # NestJS Boilerplate
 
 Enterprise-ready NestJS backend boilerplate with modern engineering standards, CI/CD, code governance, Docker, Vault integration, and scalable architecture practices.
+
+See [the Clean Architecture guide](docs/clean-architecture.md) for the current
+project boundaries, folder structure, file responsibilities, and request flow.
 
 ---
 
@@ -307,6 +309,3 @@ This boilerplate follows:
 * CI-first validation
 * infrastructure-as-code mindset
 * production-first engineering practices
-
-```
-```
