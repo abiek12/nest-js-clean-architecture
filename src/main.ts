@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import { json, urlencoded } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { bootstrapConfig } from './config/lifecycle/bootstrap-config';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   await bootstrapConfig();
@@ -56,6 +57,31 @@ async function bootstrap() {
     headers: 'Content-Type, Authorization , Accept , X-Requested-With ',
   };
   app.enableCors(options);
+
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle('EDMS API')
+    .setDescription('API documentation for EDMS backend')
+    .setVersion('1.0.0')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'Authorization',
+        description: 'Enter JWT token',
+        in: 'header',
+      },
+      'access-token',
+    )
+    .build();
+
+  const swaggerDocumentFactory = () => SwaggerModule.createDocument(app, swaggerConfig);
+
+  SwaggerModule.setup('api/docs', app, swaggerDocumentFactory, {
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
+  });
 
   // Start the server
   const port = process.env.PORT || 3000;
