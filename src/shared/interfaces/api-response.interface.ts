@@ -6,9 +6,10 @@ export interface ApiSuccessResponse<T> {
 
 export interface ApiErrorResponse {
   success: false;
-  message: string;
-  errorCode?: string;
-  errorDetails?: unknown;
+  statusCode: number;
+  message: string | string[];
+  errorCode: string;
+  details?: unknown;
 }
 
 export const successResponse = <T>(message: string, data: T): ApiSuccessResponse<T> => {

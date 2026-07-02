@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { ConflictException, Inject } from '@nestjs/common';
 import { USER_REPOSITORY } from '../../domain/repositories/user.repository';
 import type { UserRepository } from '../../domain/repositories/user.repository';
 import { CreateUserInput } from '../dto/create-user.input';
@@ -15,7 +15,7 @@ export class CreateUserUseCase {
     const existingUser = await this.userRepository.findByEmail(input.email);
 
     if (existingUser) {
-      throw new Error('User already exists!');
+      throw new ConflictException('User already exists!');
     }
 
     const user = User.create({

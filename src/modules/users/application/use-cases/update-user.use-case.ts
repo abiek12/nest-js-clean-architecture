@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { USER_REPOSITORY } from '../../domain/repositories/user.repository';
 import type { UserRepository } from '../../domain/repositories/user.repository';
 import { User } from '../../domain/entities/user.entity';
@@ -15,14 +15,14 @@ export class UpdateUserUseCase {
     const user = await this.userRepository.findById(input.id);
 
     if (!user) {
-      throw new Error('User not found');
+      throw new NotFoundException('User not found');
     }
 
     if (input.email && input.email !== user.email) {
       const emailOwner = await this.userRepository.findByEmail(input.email);
 
       if (emailOwner && emailOwner.id !== user.id) {
-        throw new Error('Email already exists');
+        throw new ConflictException('Email already exists');
       }
 
       user.changeEmail(input.email);
