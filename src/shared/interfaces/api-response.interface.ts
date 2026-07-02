@@ -1,14 +1,37 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+
 export interface ApiSuccessResponse<T> {
   success: true;
   message: string;
   data: T;
 }
 
-export interface ApiErrorResponse {
-  success: false;
-  statusCode: number;
-  message: string | string[];
-  errorCode: string;
+export class ErrorResponseDto {
+  @ApiProperty({
+    example: false,
+  })
+  success!: false;
+
+  @ApiProperty({
+    example: 400,
+  })
+  statusCode!: number;
+
+  @ApiProperty({
+    example: 'Invalid request data',
+  })
+  message!: string | string[];
+
+  @ApiProperty({
+    example: 'BAD_REQUEST',
+  })
+  errorCode!: string;
+
+  @ApiPropertyOptional({
+    example: {
+      field: 'email',
+    },
+  })
   details?: unknown;
 }
 

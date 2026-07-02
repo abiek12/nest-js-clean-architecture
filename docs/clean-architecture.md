@@ -254,7 +254,7 @@ user-specific business rules.
 | `shared/constants/seed.constants.ts` | Constants for database seed data. |
 | `shared/enums/user-role.enum.ts` | The current user-role values. |
 | `shared/enums/user-status.enum.ts` | The current user-status values. |
-| `shared/interfaces/api-response.interface.ts` | Defines `ApiSuccessResponse`, `ApiErrorResponse`, and `successResponse`. |
+| `shared/interfaces/api-response.interface.ts` | Defines `ApiSuccessResponse`, `ErrorResponseDto`, and `successResponse`. |
 | `shared/types/nullable.type.ts` | Reusable nullable type. |
 | `shared/utils/date.util.ts` | Date utility functions. |
 | `shared/utils/jwt.util.ts` | JWT utility functions. |

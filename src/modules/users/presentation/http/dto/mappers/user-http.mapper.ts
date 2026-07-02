@@ -1,7 +1,7 @@
 import { UserOutput } from 'src/modules/users/application/dto/user.output';
-import { UserResponse } from '../responses/user.response';
+import { UserResponseDto } from '../responses/user.response';
 
-export const toResponse = (user: UserOutput): UserResponse => {
+export const toResponse = (user: UserOutput): UserResponseDto => {
   return {
     id: user.id,
     name: user.name,
@@ -11,6 +11,6 @@ export const toResponse = (user: UserOutput): UserResponse => {
   };
 };
 
-export const toResponseList = (users: UserOutput[]): UserResponse[] => {
+export const toResponseList = (users: UserOutput[]): UserResponseDto[] => {
   return users.map((user) => toResponse(user));
 };
