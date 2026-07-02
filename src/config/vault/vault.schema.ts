@@ -1,10 +1,25 @@
-import { z } from 'zod';
+import { IsIn, IsString, Matches } from 'class-validator';
+import { validateConfig } from '../validation/validate-config';
 
-export const vaultSchema = z.object({
-  PORT: z.string().regex(/^\d+$/, 'PORT must be numeric'),
-  NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-  REQUEST_BODY_LIMIT: z.string().default('10mb'),
-  CORS_ORIGINS: z.string().default(''),
-});
+export type NodeEnv = 'development' | 'production' | 'test';
 
-export type VaultConfig = z.infer<typeof vaultSchema>;
+export class VaultConfig {
+  @IsString()
+  @Matches(/^\d+$/, { message: 'PORT must be numeric' })
+  PORT!: string;
+
+  @IsIn(['development', 'production', 'test'], {
+    message: 'NODE_ENV must be one of: development, production, test',
+  })
+  NODE_ENV: NodeEnv = 'development';
+
+  @IsString()
+  REQUEST_BODY_LIMIT = '10mb';
+
+  @IsString()
+  CORS_ORIGINS = '';
+}
+
+export function validateVaultConfig(config: Record<string, unknown>): VaultConfig {
+  return validateConfig(VaultConfig, config);
+}

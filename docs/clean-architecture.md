@@ -144,14 +144,14 @@ src/                                      # Application source code
 │   │   └── response.interceptor.ts
 │   ├── middleware/                         # HTTP middleware
 │   │   └── request-logger.middleware.ts
-│   └── pipes/                              # Request validation/transformation
-│       └── zod-validation.pipe.ts
 ├── config/                                 # Runtime configuration and lifecycle code
 │   ├── env/                                # Environment-variable validation
 │   │   └── env.schema.ts
 │   ├── lifecycle/                          # Startup and shutdown behavior
 │   │   ├── bootstrap-config.ts
 │   │   └── shutdown.service.ts
+│   ├── validation/                         # Class-validator based config validation
+│   │   └── validate-config.ts
 │   └── vault/                              # Vault secret retrieval and validation
 │       ├── vault.constants.ts
 │       ├── vault.schema.ts
@@ -228,6 +228,7 @@ src/                                      # Application source code
 | `src/config/env/env.schema.ts` | Validates the Vault connection environment values. |
 | `src/config/lifecycle/bootstrap-config.ts` | Validates environment configuration, then synchronizes Vault secrets before the Nest app is created. |
 | `src/config/lifecycle/shutdown.service.ts` | Receives Nest shutdown notifications and logs the lifecycle event. |
+| `src/config/validation/validate-config.ts` | Converts plain config objects into decorated classes and returns field-level validation errors. |
 | `src/config/vault/vault.service.ts` | Fetches, validates, and copies Vault secrets into `process.env`. |
 | `src/config/vault/vault.schema.ts` | Defines the Vault secret shape currently used by the application. |
 | `src/config/vault/vault.constants.ts` | Lists the known Vault secret keys. |
@@ -249,7 +250,6 @@ user-specific business rules.
 | `common/guards/roles.guard.ts` | Reserved role authorization guard. |
 | `common/interceptors/response.interceptor.ts` | Reserved response interception logic. |
 | `common/middleware/request-logger.middleware.ts` | Reserved request logging middleware. |
-| `common/pipes/zod-validation.pipe.ts` | Reserved Zod-backed validation pipe. |
 | `shared/constants/app.constants.ts` | Application-wide constants, including the default port. |
 | `shared/constants/seed.constants.ts` | Constants for database seed data. |
 | `shared/enums/user-role.enum.ts` | The current user-role values. |

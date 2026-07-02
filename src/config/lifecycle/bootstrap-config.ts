@@ -1,6 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { VaultService } from '../vault/vault.service';
-import { envSchema } from '../env/env.schema';
+import { validateEnvConfig } from '../env/env.schema';
+import { ConfigValidationError } from '../validation/validate-config';
 
 const logger = new Logger('Bootstrap');
 
@@ -8,10 +9,13 @@ export const vaultService = new VaultService();
 
 export async function bootstrapConfig(): Promise<void> {
   // 1. Validate .env first
-  const envResult = envSchema.safeParse(process.env);
-  if (!envResult.success) {
+  try {
+    validateEnvConfig(process.env);
+  } catch (error) {
     logger.error('Invalid .env configuration');
-    logger.error(envResult.error.flatten().fieldErrors);
+    if (error instanceof ConfigValidationError) {
+      logger.error(error.fieldErrors);
+    }
     throw new Error('Environment validation failed');
   }
 

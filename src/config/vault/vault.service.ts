@@ -1,5 +1,5 @@
 import { Logger } from '@nestjs/common';
-import { vaultSchema, type VaultConfig } from './vault.schema';
+import { type VaultConfig, validateVaultConfig } from './vault.schema';
 import { VaultSecretResponse } from './vault.types';
 
 export class VaultService {
@@ -26,7 +26,7 @@ export class VaultService {
       const json = (await response.json()) as VaultSecretResponse;
 
       // Validate — throws with clear field-level errors if invalid
-      const parsed = vaultSchema.parse(json.data.data);
+      const parsed = validateVaultConfig(json.data.data);
       this.secrets = parsed;
 
       // Hydrate process.env for framework compatibility

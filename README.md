@@ -15,7 +15,7 @@ project boundaries, folder structure, file responsibilities, and request flow.
 | Language | TypeScript |
 | Formatter + Linting | Biome |
 | Unit Testing | Jest |
-| Runtime Validation | Zod / class-validator |
+| Runtime Validation | class-validator |
 | Static Code Analysis | SonarQube |
 | CI/CD | GitHub Actions |
 | Containerization | Docker |
